@@ -19,6 +19,6 @@ export async function GET(req:Request){
     const now=Date.now();const closed=all.filter(x=>{const t=Date.parse(x.datetime.replace(' ','T')+'Z');return Number.isFinite(t)&&t+5*60000<=now-5000;});
     const last=closed.at(-1);const lastTime=last?Date.parse(last.datetime.replace(' ','T')+'Z')+5*60000:0;
     if(!last || now-lastTime>15*60000)return NextResponse.json({status:'STALE',side:'AGUARDAR',error:'Cotações ausentes ou antigas; nenhuma entrada autorizada.',lastCandle:last?.datetime??null});
-    return NextResponse.json({status:'LIVE_DATA',symbol,interval:'5min',lastCandle:last.datetime,close:last.close, ...analyze(closed),note:'Heurística experimental, sem probabilidade de acerto validada. Fonte externa pode diferir da corretora.'});
+    return NextResponse.json({status:'LIVE_DATA',symbol,interval:'5min',lastCandle:last.datetime,lastCloseTime:new Date(lastTime).toISOString(),serverTime:new Date(now).toISOString(),candles:closed.slice(-65),close:last.close, ...analyze(closed),note:'Heurística experimental, sem probabilidade de acerto validada. Fonte externa pode diferir da corretora.'});
   } catch(e){return NextResponse.json({status:'OFFLINE',side:'AGUARDAR',error:e instanceof Error?e.message:'Erro ao consultar cotações'});}
 }
