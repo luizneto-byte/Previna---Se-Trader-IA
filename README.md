@@ -34,3 +34,11 @@ O painel não espera a próxima vela para avisar. Usa tendências das velas M5 e
 ## Diagnóstico de alertas (revisão)
 
 O radar agora mostra os motivos pelos quais não emite sinal, separando bloqueios de registro da detecção técnica. Uma operação pendente ou limite de banca não deve ocultar um sinal, mas continua impedindo seu registro. O mecanismo usa EMA/RSI e dados da Twelve Data, sem qualquer taxa de acerto comprovada. Não há streaming de segundos nem promessa de alertas frequentes. Se os dados da API forem atrasados ou os filtros não forem satisfeitos, o aviso não será mostrado.
+
+
+## Correção do radar (novembro/2026)
+
+- Corrigida a interface que deixava o usuário apenas com “Monitorando PUT” após o fim ou descarte da contagem: enquanto os dados estiverem recentes e houver direção técnica, o painel mantém “SINAL TÉCNICO IDENTIFICADO” visível.
+- A contagem de dez segundos é somente pré-alerta de reavaliação; não significa instrução de entrada, probabilidade validada nem execução.
+- O botão de confirmação só registra a decisão; nenhuma ordem é enviada.
+- A atualização intravela é por REST a cada 15 segundos, não streaming tick a tick.
