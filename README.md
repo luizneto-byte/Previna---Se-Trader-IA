@@ -26,3 +26,6 @@ Painel de sinais técnicos M5 para uso privado, com **confirmação manual sem e
 - Atualização REST: velas normalmente a cada 60 s, com consultas extras perto da virada; preços a cada 60 s. NÃO É TRANSMISSÃO TICK A TICK. Para gráfico realmente fluido é necessário serviço WebSocket/streaming apropriado e arquitetura segura no servidor (não expor API key no navegador).
 - A cada hora de uso contínuo, a combinação de consultas pode consumir dezenas de créditos da API. No plano gratuito os limites podem ser atingidos. Se isso ocorrer, interrompa o monitoramento e confira a franquia da Twelve Data.
 - Se o mercado estiver parado, a cotação estiver velha ou houver posição PENDENTE, o aviso não aparece.
+
+## Avisos intravela (versão atual)
+O painel não espera a próxima vela para avisar. Usa tendências das velas M5 encerradas, consulta REST /price a cada 15 segundos e começa uma contagem de 10 segundos quando encontra sinal e cotação recente. No fim, mostra apenas um sinal para conferência manual. **Não é WebSocket nem preço tick a tick.** Com muitos ativos ou uso prolongado, pode ultrapassar o limite da API gratuita Twelve Data; nesse caso aumente o intervalo e não opere com dados atrasados. A confirmação apenas registra localmente, não opera na corretora.
