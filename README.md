@@ -18,3 +18,11 @@ Painel de sinais técnicos M5 para uso privado, com **confirmação manual sem e
 - A proteção de senha foi projetada para uso individual, mas a primeira versão não implementa rate limiting distribuído, recuperação de conta nem autenticação multifator. Antes de expor publicamente, adicione controles de segurança e banco de dados.
 - Esta versão não suporta conta real conectada ou execuções automáticas. Faça backtests com custos e dados fora da amostra, forward tests e verificação regulatória antes de qualquer decisão financeira.
 - No Brasil, verifique a autorização CVM de quaisquer intermediárias. Há alerta da CVM sobre a IQ Option Ltd.
+
+## Monitoramento com alertas
+
+- O painel recebe velas M5 concluídas da Twelve Data e consulta o endpoint `/price` para atualizar o último preço exibido (ponto azul no gráfico quando estiver na faixa vertical).
+- A contagem de 10 segundos aparece ANTES de uma nova janela M5 somente se já existir sinal técnico não vencido e limites de risco permitirem. É um aviso de reavaliação, NÃO um momento garantido para operar. O sistema não envia ordens.
+- Atualização REST: velas normalmente a cada 60 s, com consultas extras perto da virada; preços a cada 60 s. NÃO É TRANSMISSÃO TICK A TICK. Para gráfico realmente fluido é necessário serviço WebSocket/streaming apropriado e arquitetura segura no servidor (não expor API key no navegador).
+- A cada hora de uso contínuo, a combinação de consultas pode consumir dezenas de créditos da API. No plano gratuito os limites podem ser atingidos. Se isso ocorrer, interrompa o monitoramento e confira a franquia da Twelve Data.
+- Se o mercado estiver parado, a cotação estiver velha ou houver posição PENDENTE, o aviso não aparece.
