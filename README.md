@@ -29,3 +29,8 @@ Painel de sinais técnicos M5 para uso privado, com **confirmação manual sem e
 
 ## Avisos intravela (versão atual)
 O painel não espera a próxima vela para avisar. Usa tendências das velas M5 encerradas, consulta REST /price a cada 15 segundos e começa uma contagem de 10 segundos quando encontra sinal e cotação recente. No fim, mostra apenas um sinal para conferência manual. **Não é WebSocket nem preço tick a tick.** Com muitos ativos ou uso prolongado, pode ultrapassar o limite da API gratuita Twelve Data; nesse caso aumente o intervalo e não opere com dados atrasados. A confirmação apenas registra localmente, não opera na corretora.
+
+
+## Diagnóstico de alertas (revisão)
+
+O radar agora mostra os motivos pelos quais não emite sinal, separando bloqueios de registro da detecção técnica. Uma operação pendente ou limite de banca não deve ocultar um sinal, mas continua impedindo seu registro. O mecanismo usa EMA/RSI e dados da Twelve Data, sem qualquer taxa de acerto comprovada. Não há streaming de segundos nem promessa de alertas frequentes. Se os dados da API forem atrasados ou os filtros não forem satisfeitos, o aviso não será mostrado.
